@@ -15,5 +15,12 @@
   "bugs": {
     "url": "https://github.com/kentandersen/make/issues"
   },
-  "homepage": "https://github.com/kentandersen/make"
+  "homepage": "https://github.com/kentandersen/make",
+  "dependencies": {
+    "shelljs": "~0.2.6",
+    "colors": "~0.6.2",
+    "npm-bin": "~0.1.0",
+    "jshint": "~2.4.4",
+    "requirejs": "~2.1.11"
+  }
 }
