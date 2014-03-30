@@ -1,4 +1,4 @@
-require('shelljs/make');
+require('shelljs/global');
 
 /**
  * options
@@ -17,6 +17,7 @@ var cleanDirTask = function(options) {
     return dir;
 };
 
+cleanDirTask.description = "Cleans directory";
 
 module.exports = cleanDirTask;
 

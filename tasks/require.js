@@ -1,4 +1,4 @@
-var utils = require("../utils");
+var utils = require("../lib/utils");
 
 /**
  * options
@@ -14,5 +14,6 @@ var requirejsTask = function(options) {
     utils.bin('r.js', ['-o ' + rjsConfig, 'out=' + outputFile]);
 };
 
+requirejsTask.description = "Optimizes all usage of bear";
 
 module.exports = requirejsTask;

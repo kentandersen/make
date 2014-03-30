@@ -1,4 +1,4 @@
-var utils = require("../utils");
+var utils = require("../lib/utils");
 
 var defaultOptions = {
     inlineImages: true
@@ -35,5 +35,6 @@ var lessjsTask = function(options) {
     }
 };
 
+lessjsTask.description = "Compiles and compresses less into css";
 
 module.exports = lessjsTask;

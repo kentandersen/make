@@ -1,11 +1,17 @@
-require('shelljs/make');
+require('shelljs/global');
 var glob = require("glob");
 var path = require("path");
-var utils = require("../utils");
+var utils = require("../lib/utils");
+
+/**
+ * options
+ *   inputDir:      [string] directory with files to be optimized
+ *   outputDir:     [string] directory to copy optimized image files
+ */
 
 var optimizePngImages = function(pngs) {
     if(pngs.length > 0) {
-        npmBin('optipng-bin', ['-strip all', '-o7', '-zm1-9', '-clobber' + to, pngs.join(' ')])
+        utils.bin('optipng-bin', ['-strip all', '-o7', '-zm1-9', '-clobber' + to, pngs.join(' ')])
     }
 };
 
@@ -17,12 +23,6 @@ var optimizeSvgImages = function(svgs) {
     }
 };
 
-/**
- * options
- *   inputDir:      [string] directory with files to be optimized
- *   outputDir:     [string] directory to copy optimized image files
- */
-
 var buildimages = function(options) {
 
     var inputDir = options.inputDir;
@@ -31,8 +31,9 @@ var buildimages = function(options) {
     utils.section('Copying resources ' + inputDir + ' → ' + outputDir);
 
     cp('-rf', path.join(inputDir, '*'), outputDir);
+    utils.success();
 
-    utils.section('optimizing images');
+    utils.section('Optimizing images');
 
     var pngs = glob.sync(path.join(outputDir, '**', '*.png'), {nocase: true});
     optimizePngImages(pngs);
@@ -40,5 +41,7 @@ var buildimages = function(options) {
     var svgs = glob.sync(path.join(outputDir, '**', '*.svg'), {nocase: true});
     optimizeSvgImages(svgs);
 };
+
+buildimages.description = "Copies and optimizes png and svg images";
 
 module.exports = buildimages;

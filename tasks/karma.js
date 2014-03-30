@@ -1,5 +1,5 @@
 var _ = require("underscore");
-var utils = require('../utils');
+var utils = require('../lib/utils');
 
 var defaultOptions = {
     browsers: ['PhantomJS'],
@@ -29,5 +29,6 @@ var karmaTask = function(options) {
     ]);
 };
 
+karmaTask.description = "Js unit tests";
 
 module.exports = karmaTask;
