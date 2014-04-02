@@ -18,10 +18,15 @@ var jsHintTask = function(options) {
 
 
     var files = options.files;
+    var excludes = options.exclude;
+    excludes = _.isArray(excludes) ? excludes : [excludes];
+
     var config = options.config;
 
     files = _.filter(files, function(file) {
-        return file.indexOf(options.exclude) === -1;
+        return _.every(excludes, function(exclude) {
+            return file.indexOf(exclude) === -1;
+        });
     });
 
     utils.section('Running JSHint ' + files.length + ' files');
