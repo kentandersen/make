@@ -1,4 +1,5 @@
 require('shelljs/global');
+var utils = require("../lib/utils");
 
 /**
  * options
@@ -6,7 +7,10 @@ require('shelljs/global');
  */
 
 var cleanDirTask = function(options) {
+
     var dir = options.dir;
+
+    utils.section('Cleaning directory ' + dir);
 
     if (test('-d', dir)) {
         rm('-rf', dir);
@@ -14,7 +18,7 @@ var cleanDirTask = function(options) {
 
     mkdir('-p', dir);
 
-    return dir;
+    utils.success();
 };
 
 cleanDirTask.description = "Cleans directory";
