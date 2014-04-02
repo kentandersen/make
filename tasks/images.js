@@ -11,7 +11,7 @@ var utils = require("../lib/utils");
 
 var optimizePngImages = function(pngs) {
     if(pngs.length > 0) {
-        utils.bin('optipng-bin', ['-strip all', '-o7', '-zm1-9', '-clobber' + to, pngs.join(' ')])
+        utils.bin('optipng', ['-strip all', '-o7', '-zm1-9', '-clobber', pngs.join(' ')], {silent: true})
     }
 };
 
