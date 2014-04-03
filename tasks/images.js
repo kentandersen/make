@@ -35,7 +35,7 @@ var buildimages = function(options) {
 
     var optimizePngImages = function(pngs) {
         if(pngs.length > 0) {
-            console.log("Handeling pngs");
+            console.log('  ' + pngs.length + ' png files');
             var bar = new ProgressBar(':bar', { total: pngs.length });
 
             var success = _.every(pngs, function(png) {
@@ -49,7 +49,7 @@ var buildimages = function(options) {
 
     var optimizeSvgImages = function(svgs) {
         if(svgs.length > 0) {
-            console.log("Handeling svgs");
+            console.log('  ' + svgs.length + ' svg files');
             var bar = new ProgressBar(':bar', { total: svgs.length });
 
             var success = _.every(svgs, function(svg) {
