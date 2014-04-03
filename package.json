@@ -35,6 +35,8 @@
     "karma-chrome-launcher": "~0.1.2",
     "karma-requirejs": "~0.2.1",
     "karma-sinon": "~1.0.3",
-    "progress": "^1.1.5"
+    "progress": "^1.1.5",
+    "versiony": "~1.2.6",
+    "js-beautify": "~1.4.2"
   }
 }
