@@ -1,6 +1,9 @@
 require('shelljs/global');
 var glob = require("glob");
 var path = require("path");
+var _ = require("underscore");
+var npmBin = require("npm-bin");
+var ProgressBar = require('progress');
 var utils = require("../lib/utils");
 
 /**
@@ -8,18 +11,40 @@ var utils = require("../lib/utils");
  *   inputDir:      [string] directory with files to be optimized
  *   outputDir:     [string] directory to copy optimized image files
  */
+var done = function (isSuccess) {
+    if(isSuccess) {
+        utils.success();
+    } else {
+        utils.fail();
+    }
+}
+
 
 var optimizePngImages = function(pngs) {
     if(pngs.length > 0) {
-        utils.bin('optipng', ['-strip all', '-o7', '-zm1-9', '-clobber', pngs.join(' ')], {silent: true})
+        console.log("Handeling pngs");
+        var bar = new ProgressBar(':bar', { total: pngs.length });
+
+        var success = _.every(pngs, function(png) {
+            bar.tick();
+            return npmBin('optipng', ['-strip all', '-o7', '-zm1-9', '-clobber', png], {silent: true}).code === 0;
+        });
+
+        done(success);
     }
 };
 
 var optimizeSvgImages = function(svgs) {
     if(svgs.length > 0) {
-        svgs.forEach(function(svg) {
-            utils.bin('svgo', svg, {silent: true});
+        console.log("Handeling svgs");
+        var bar = new ProgressBar(':bar', { total: svgs.length });
+
+        var success = _.every(svgs, function(svg) {
+            bar.tick();
+            return npmBin('svgo', svg, {silent: true}).code === 0;
         });
+
+        done(success);
     }
 };
 
