@@ -40,7 +40,7 @@ var buildimages = function(options) {
 
             var success = _.every(pngs, function(png) {
                 bar.tick();
-                return npmBin('optipng', ['-strip all', '-o7', '-zm1-9', '-clobber', png], {silent: true}).code !== 0;
+                return npmBin('optipng', ['-strip all', '-o7', '-zm1-9', '-clobber', png], {silent: true}).code === 0;
             });
 
             done(success);
