@@ -1,34 +1,41 @@
-var _ = require("underscore");
+var fs = require('fs');
+var path = require('path');
+var _ = require('underscore');
 var utils = require('../lib/utils');
 
 var defaultOptions = {
+    cms: 'start',
     browsers: ['PhantomJS'],
     singleRun: true
 };
 
 /**
  * options
- *   config:    [string] path to karma config file
- *   browsers:  [array/string] list of browsers to run the tests
- *   singleRun: [boolean] run only once or watch files and run multiple times
+ *   configFile:    [string] path to karma config file
+ *   browsers:      [array/string] list of browsers to run the tests
+ *   singleRun:     [boolean] run only once or watch files and run multiple times
  */
 
-var karmaTask = function(options) {
-    _.defaults(options, defaultOptions);
+var karmaTask = function(opt) {
+    _.defaults(opt, defaultOptions);
 
     utils.section('Running JavaScript tests');
 
-    var browsers = options.browsers;
-    var browsers = _.isArray(browsers) ? browsers.join(',') : browsers;
+    if(!_.isArray(opt.browsers)) {
+        opt.browsers = [opt.browsers];
+    }
 
-    utils.bin('karma', [
-        'start',
-        options.config,
-        '--browsers ' + browsers,
-        options.singleRun ? '--single-run' : ''
-    ]);
+    var localKarma = path.normalize(path.join(__dirname, '..', 'node_modules', 'karma'));
+
+    if (fs.existsSync(localKarma)) {
+        var karmaServer = require(path.join(localKarma, 'lib', 'server'));
+
+        karmaServer.start(opt);
+    } else {
+        console.error('Cannot find local Karma!');
+    }
 };
 
-karmaTask.description = "Js unit tests";
+karmaTask.description = "JavaScript unit tests";
 
 module.exports = karmaTask;
