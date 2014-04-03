@@ -11,10 +11,10 @@ var defaultOptions = {
 
 /**
  * options
- *   buildDir:          [string] directory with files to be optimized
- *   mainVersionFile:   [string] directory to copy optimized image files
- *   slaveVersionFile:  [string/array] directory to copy optimized image files
- *   buildBranch:       [string] directory to copy optimized image files
+ *   buildDir:          [string] build directory to be checked in
+ *   masterVersionFile: [string] file holding current version
+ *   slaveVersionFile:  [string/array] files to inherit version from masterVersionFile
+ *   buildBranch:       [string] branch to push changes to
  */
 
 
@@ -29,7 +29,7 @@ var tagBuild = function(options) {
     }
 
     // bump version number
-    var version = versiony.from(options.mainVersionFile)
+    var version = versiony.from(options.masterVersionFile)
     var v = version.get();
 
     var slaveFiles = options.slaveVersionFile
