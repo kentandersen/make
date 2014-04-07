@@ -36,6 +36,8 @@ var tagBuild = function(options) {
     if(slaveFiles) {
         utils.section('Adding updated version files');
 
+        exec('git add ' + options.masterVersionFile);
+
         slaveFiles = _.isArray(slaveFiles) ? slaveFiles : [slaveFiles];
 
         _.forEach(slaveFiles, function(slaveFile) {
