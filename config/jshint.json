@@ -11,7 +11,7 @@
     "noarg":        true,
     "noempty":      false,
     "nonew":        false,
-    "plusplus":     true,
+    "plusplus":     false,
     "quotmark":     false,
     "undef":        true,
     "unused":       "vars",
@@ -20,9 +20,10 @@
     "maxparams":    15,
     "maxdepth":     5,
     "maxstatements":    15,
-    "maxcomplexity":    5,
+    "maxcomplexity":    8,
     "maxlen":       120,
     "globals": {
+        "window": true,
         "document": true,
         "define":   true,
         "requirejs": true
