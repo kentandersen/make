@@ -1,3 +1,4 @@
+var _ = require("underscore");
 var utils = require("../lib/utils");
 
 var defaultOptions = {
@@ -13,6 +14,8 @@ var defaultOptions = {
  */
 
 var lessjsTask = function(options) {
+    _.defaults(options, defaultOptions);
+
     var inputFile = options.inputFile;
     var outputFile = options.outputFile;
 
