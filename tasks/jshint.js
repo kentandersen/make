@@ -3,7 +3,7 @@ var _ = require("underscore");
 var utils = require('../lib/utils');
 
 var defaultOptions = {
-    config: path.join(__dirname, '..', 'config', 'jshint.json')
+    configFile: path.join(__dirname, '..', 'config', 'jshint.json')
 };
 
 /**
