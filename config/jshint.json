@@ -21,11 +21,11 @@
     "maxdepth":     5,
     "maxstatements":    15,
     "maxcomplexity":    8,
-    "maxlen":       120,
+    "maxlen":       150,
+    "browser":      true,
     "globals": {
-        "window": true,
-        "document": true,
         "define":   true,
+        "require":  true,
         "requirejs": true
     }
 }
