@@ -2,6 +2,7 @@ require('shelljs/global');
 var glob = require("glob");
 var path = require("path");
 var _ = require("underscore");
+var optipng = require('optipng-bin').path;
 var npmBin = require("npm-bin");
 var ProgressBar = require('progress');
 var utils = require("../lib/utils");
@@ -39,8 +40,9 @@ var buildimages = function(options) {
             var bar = new ProgressBar(':bar', { total: pngs.length });
 
             var success = _.every(pngs, function(png) {
+                var res = exec(optipng + [' -strip all', '-o7', '-zm1-9', '-clobber', png].join(' '), {silent: true});
                 bar.tick();
-                return npmBin('optipng', ['-strip all', '-o7', '-zm1-9', '-clobber', png], {silent: true}).code === 0;
+                return res.code === 0;
             });
 
             done(success);
