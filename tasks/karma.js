@@ -1,4 +1,3 @@
-var fs = require('fs');
 var path = require('path');
 var _ = require('underscore');
 var utils = require('../lib/utils');
@@ -25,15 +24,20 @@ var karmaTask = function(opt) {
         opt.browsers = [opt.browsers];
     }
 
-    var localKarma = path.normalize(path.join(__dirname, '..', 'node_modules', 'karma'));
+    // add maks node_modules to node path to make karma-cli find the karma executable
+    var nodeModules = path.join(__dirname, '..', 'node_modules');
+    process.env.NODE_PATH += path.delimiter + nodeModules;
 
-    if (fs.existsSync(localKarma)) {
-        var karmaServer = require(path.join(localKarma, 'lib', 'server'));
-
-        karmaServer.start(opt);
-    } else {
-        console.error('Cannot find local Karma!');
+    var args = ['start', opt.configFile];
+    if(opt.browsers) {
+        args.push('--browsers ' + opt.browsers.join());
     }
+
+    if(opt.singleRun) {
+        args.push('--single-run');
+    }
+
+    utils.bin('karma', args);
 };
 
 karmaTask.description = "JavaScript unit tests";
