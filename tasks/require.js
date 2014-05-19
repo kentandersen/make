@@ -1,9 +1,12 @@
+var path = require("path")
 var _ = require("underscore");
 var utils = require("../lib/utils");
 
 /**
  * options
- *   outputFile:    [array] file to save to
+ *   inputModule    [array/string] modules to build
+ *   outputFile:    [string] path to save single built files, not in use with inputModule
+ *   outputDir:     [string] path to save built files, only in use with inputModule
  *   configFile:    [string] path to rjs config file
  *   config:        [object] extra command line options
  */
@@ -25,10 +28,22 @@ var requirejsTask = function(options) {
     var rjsConfig = options.configFile;
     var args = generateConfig(options.config);
 
-    utils.section('Building JavaScript → ' + outputFile);
-    utils.bin('r.js', ['-o ' + rjsConfig, 'out=' + outputFile, args]);
+    if(options.inputModule) {
+        var inputModule = options.inputModule;
+        var inputModule = _.isArray(inputModule) ? inputModule : [inputModule];
+
+        inputModule.forEach(function(module) {
+            var outputFile = path.join(options.outputDir, path.basename(module) + '.js');
+            utils.section('Building JavaScript → ' + outputFile);
+            utils.bin('r.js', ['-o ' + rjsConfig, 'out=' + outputFile, 'name=' + module, args]);
+        });
+    } else {
+        utils.section('Building JavaScript → ' + outputFile);
+        utils.bin('r.js', ['-o ' + rjsConfig, 'out=' + outputFile, args]);
+    }
+
 };
 
-requirejsTask.description = "Optimizes all usage of bear";
+requirejsTask.description = "Optimizes requirejs modules and produces one file";
 
 module.exports = requirejsTask;
